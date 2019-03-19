@@ -1,5 +1,6 @@
-from flask import Flask, render_template, url_for, flash, redirect, request, session
+from flask import Flask, render_template, url_for, flash, redirect, request, session, make_response
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
+from datetime import datetime, timedelta
 from pymysql import escape_string as thwart
 from functools import wraps
 import gc
@@ -52,7 +53,9 @@ def index():
         flash(e) # remove for production
         error = "Invalid creditials, try again." # this is extremely strict and will not tell the hacker what error it is
         return render_template("main.html", error = error)
-        
+
+## DASHBOARD
+    
 @login_required
 @app.route("/dashboard/")
 def dashboard():
@@ -61,6 +64,8 @@ def dashboard():
     except Exception as e:
         return render_template("500.html", error = e)
     
+## LOGIN
+
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     error = ""
@@ -89,6 +94,8 @@ def login():
         error = "Invalid creditials, try again." # this is extremely strict and will not tell the hacker what error it is
         return render_template("login.html", error = error)
     
+## LOGOUT
+
 @login_required  
 @app.route("/logout/")
 def logout():
@@ -105,7 +112,8 @@ class RegistrationForm(Form):
     confirm = PasswordField("Repeat Password")
     accept_tos = BooleanField("I accept the Terms of Service and Privacy Notice", [validators.Required()])
 
-    
+## REGISTER
+
 @app.route("/register/", methods=["GET","POST"])
 def register_page():
     try:
@@ -141,6 +149,30 @@ def register_page():
     except Exception as e:
         return(str(e)) # remember to remove! For debugging only!
     
+## SITE MAP
+
+@app.route("/sitemap.xml/", methods=["GET"])
+def sitemap():
+    try:
+        pages = []
+        week = ((datetime.now()) - timedelta(days = 7)).date().isoformat()
+        for rule in app.url_map.iter_rules():
+            if "GET" in rule.methods and len(rule.arguments)==0:
+                pages.append(["http://68.183.19.24"+str(rule.rule), week])
+            
+        sitemap_xml = render_template("sitemap_template.xml", pages = pages)
+        response = make_response(sitemap_xml)
+        response.headers["Content-Type"] = "application/xml"
+        return response
+    
+    except Exception as e:
+        return(str(e))
+    
+## ROUGE ROBOTS
+
+@app.route("/robots.txt")
+def robots():
+    return("User-agent: \nDisallow: /login \nDisallow: /register")
 
 ## Error Handlers
 
@@ -157,4 +189,4 @@ def int_server_error(e):
     return render_template("500.html", error = e)
 
 if __name__ == "__main__":
-    app.run(debug=False) # should be turned off/False for production!
+    app.run(debug=True) # should be turned off/False for production!
