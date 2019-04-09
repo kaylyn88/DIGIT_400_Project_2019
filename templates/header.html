@@ -5,15 +5,11 @@
         <meta charset="utf-8">
     <!-- This tag is completely required. -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-      
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/StudentForumFavicon.png') }}">
     <title>DIGIT 400</title>
-    
     <!-- JavaScript Model Code -->
     <script>
         $('#myModal').on('shown.bs.modal', function () {
@@ -32,6 +28,10 @@
           gtag('config', 'UA-136620157-1');
         </script>
 
+    <!-- GOOGLE MATERIAL ICONS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- CSS Style Sheet -->
+        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css">
       
   </head>
   <body>
@@ -42,7 +42,7 @@
 
             <!-- This is the logo for the site -->
                 <a class="navbar-brand" href="/">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" width="50" alt="main logo for digit 400 project site">
+                    <img src="{{ url_for('static', filename='images/StudentForumLogo.png') }}" width="50" alt="main logo for digit 400 project site">
                 </a>
             <!-- End logo -->
 
@@ -53,18 +53,21 @@
                 <div class="collapse navbar-collapse" id="navbarNav"> <!-- This makes hamburger when small -->
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/"><i class="material-icons">home</i>Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about/"><i class="material-icons">group</i>About</a>
                         </li>
                         {% if session.logged_in %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard/">Dashboard</a>
+                            <a class="nav-link" href="/dashboard/"><i class="material-icons">dashboard</i>Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout/">Logout</a>
+                            <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutmodal"><i class="material-icons">cancel</i>Logout</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModalCenter">Login</a>
+                            <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="material-icons">face</i>Login</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -107,13 +110,24 @@
 
         </div>
       
-    <!-- This can totally be a footer -->
+    <!-- Footer Content -->
       
-        
+        <footer class="page-footer font-small blue" style="position: absolute; text-align: center;">
+
+    <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Student Forum
+            <br>
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='images/StudentForumLogo.png') }}" width="50" alt="main logo for digit 400 project site">
+            </a>
+        </div>
+
+        </footer>
+    
 
     <!-- END Template Content -->
       
-    <!-- Modal -->
+    <!-- Modal LOGIN -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -124,7 +138,21 @@
                 </button>
               </div>
               <div class="modal-body">
-                You will be able to log in here soon!!!!!!
+                    <br>
+                    <form action="#" method="post">
+
+                        <input type="text" class="form-control" placeholder="User Name" name="username" value="{{request.form.username}}">
+                        &nbsp;
+                        <input type="password" class="form-control" placeholder="Password" name="password" value="{{request.form.password}}">
+                        &nbsp;
+                        <br>
+                        <input class="btn btn-primary" type="submit" value="Login">
+
+                    </form>
+                    <br>
+                    <p><code>{{ error }}</code></p>
+                  <hr>
+                    <p>Hello, do you need an account? <a href="/register/" style="text-decoration: none;">Register here!</a></p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -132,7 +160,28 @@
             </div>
           </div>
         </div>
-    <!-- End Modal -->
+    <!-- End Modal LOGIN -->
+      
+    <!-- Modal LOGOUT -->
+        <div class="modal" tabindex="-1" role="dialog" id="logoutmodal">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <form action="#" method="get">
+                    <br>
+                    <h6>Are you sure you want to logout?</h6>
+                    <br>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <br>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"><a href="/logout/" style="text-decoration: none; color:white;">Logout</a></button>
+              </div>
+            </div>
+          </div>
+        </div>
+    <!-- End Modal LOGOUT -->
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

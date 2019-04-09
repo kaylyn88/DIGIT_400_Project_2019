@@ -1,0 +1,17 @@
+h1 {
+    color: red;
+    font-family: fantasy;
+}
+
+.loop {
+    color: #ff2349;
+}
+
+#basic {
+    color: #237989;
+}
+
+.col-sm {
+    width: auto;
+    height: auto;
+}

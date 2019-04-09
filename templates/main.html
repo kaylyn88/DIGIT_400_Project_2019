@@ -5,15 +5,11 @@
         <meta charset="utf-8">
     <!-- This tag is completely required. -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-      
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/StudentForumFavicon.png') }}">
     <title>DIGIT 400</title>
-    
     <!-- JavaScript Model Code -->
     <script>
         $('#myModal').on('shown.bs.modal', function () {
@@ -32,25 +28,10 @@
           gtag('config', 'UA-136620157-1');
         </script>
       
-      
-    <style>
-        
-        #heading1{
-            font-size: 18pt;
-        }
-      
-        #heading2 {
-            text-align: left;
-            font-size: 15pt;
-        }
-        
-        #recent {
-            background-color: darkcyan;
-            color: whitesmoke;
-        }
-      
-      
-    </style>
+    <!-- GOOGLE MATERIAL ICONS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- CSS Style Sheet -->
+        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css">
       
   </head>
   <body>
@@ -60,7 +41,7 @@
         
     <!-- This is the logo for the site -->
             <a class="navbar-brand" href="/">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" width="50" alt="main logo for digit 400 project site">
+                <img src="{{ url_for('static', filename='images/StudentForumLogo.png') }}" width="50" alt="main logo for digit 400 project site">
             </a>
     <!-- END logo -->
         
@@ -71,31 +52,36 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/"><i class="material-icons">home</i>Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about/"><i class="material-icons">group</i>About</a>
                 </li>
                 {% if session.logged_in %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/">Dashboard</a>
+                    <a class="nav-link" href="/dashboard/"><i class="material-icons">dashboard</i>Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout/">Logout</a>
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutmodal"><i class="material-icons">cancel</i>Logout</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModalCenter">Login</a>
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="material-icons">face</i>Login</a>
                 </li>
                 {% endif %}
             </ul>
         </div>
     </nav>
       
-<!-- END Nav Bar-->
+<!-- END Nav Bar -->   
       
+      <!--
         <video autoplay muted loop style="width: 100%">
               <source src="/static/videos/space_cats.mp4" type="video/mp4">
         </video>
-      
-    <!-- Beginning of my page here
+        -->
+
+    <!-- Beginning of my page here -->
       <p>&nbsp;</p>
       <div class="container">
           <div class="row">
@@ -109,7 +95,8 @@
           </div>
       </div>
       
-      <p>&nbsp;</p>
+      <br>
+      <br>
     <div class="container">
         <div class="row">
             <div class="col-8" id="heading2">Recent Posts</div>
@@ -121,7 +108,23 @@
             <div class="col-4"></div>
         </div>
     </div>
-    -->
+      
+      
+      
+    <!-- Footer Content -->
+      
+        <footer class="page-footer font-small blue fixed-bottom">
+
+    <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Student Forum
+            <br>
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='images/StudentForumLogo.png') }}" width="50" alt="main logo for digit 400 project site">
+            </a>
+        </div>
+
+        </footer>
+      
     <!-- Modal -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -156,6 +159,29 @@
           </div>
         </div>
     <!-- END Modal -->
+      
+    <!-- Modal LOGOUT -->
+        <div class="modal" tabindex="-1" role="dialog" id="logoutmodal">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="modal-body">
+                    <form action="#" method="get">
+                        <br>
+                        <h6>Are you sure you want to logout?</h6>
+                        <br>
+                    </form>
+              <div class="modal-footer">
+                <br>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"><a href="/logout/" style="text-decoration: none; color:white;">Logout</a></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    <!-- End Modal LOGOUT -->
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, flash, redirect, request, session, make_response
+from flask import Flask, render_template, url_for, flash, redirect, request, session, make_response, send_file
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
 from datetime import datetime, timedelta
 from pymysql import escape_string as thwart
@@ -7,10 +7,22 @@ import gc
 from passlib.hash import sha256_crypt
 from pymysql import escape_string as thwart
 import os, sys; sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+from werkzeug.utils import secure_filename
 from content import Content
 from db_connect import connection
 
-app = Flask(__name__)
+# constants / globals
+UPLOAD_FOLDER = "/var/www/FlaskApp/FlaskApp/uploads"
+
+ALLOWED_EXTENSIONS = set(["txt", "pdf", "png", "jpg", "jpeg", "gif"])
+
+
+app = Flask(__name__) # builds our web app
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+def allowed_file(filename): # this is to check for our allowed extensions
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def login_required(f):
     @wraps(f)
@@ -50,14 +62,40 @@ def index():
         return render_template("main.html", error = error)
     
     except Exception as e:
-        flash(e) # remove for production
+        flash(e) # remember to remove! For debugging only!
         error = "Invalid creditials, try again." # this is extremely strict and will not tell the hacker what error it is
         return render_template("main.html", error = error)
 
+## ABOUT
+
+@app.route("/about/", methods=["GET", "POST"])
+def about():
+    error = ""
+    try:
+        c, conn = connection()
+        if request.method == "POST":
+            
+            data = c.execute("SELECT * FROM users WHERE username = ('{0}')".format(thwart(request.form['username'])))
+            
+            data = c.fetchone()[2]
+            
+            if sha256_crypt.verify(request.form["password"], data):
+                session['logged_in'] = True
+                session['username'] = request.form['username']
+                
+                flash("You are now logged in "+session['username']+"!")
+                return redirect(url_for("dashboard"))
+            
+            else: 
+                error = "Invalid creditials, try again." # want this the same as below because then the hacker does not know what the error is.
+        return render_template("about.html")
+    except Exception as e:
+        return render_template("500.html", error = e) 
+    
 ## DASHBOARD
     
-@login_required
 @app.route("/dashboard/")
+@login_required
 def dashboard():
     try:
         return render_template("dashboard.html", APP_CONTENT = APP_CONTENT)
@@ -90,14 +128,14 @@ def login():
         return render_template("login.html", error = error)
     
     except Exception as e:
-        flash(e) # remove for production
+        flash(e) # remember to remove! For debugging only!
         error = "Invalid creditials, try again." # this is extremely strict and will not tell the hacker what error it is
         return render_template("login.html", error = error)
     
 ## LOGOUT
 
-@login_required  
 @app.route("/logout/")
+@login_required
 def logout():
     session.clear() # will delete the cookie
     flash("You have been logged out!")
@@ -148,6 +186,61 @@ def register_page():
         return render_template("register.html", form=form)
     except Exception as e:
         return(str(e)) # remember to remove! For debugging only!
+
+## UPLOADS
+
+@app.route("/uploads/", methods=["GET", "POST"])
+@login_required
+def upload_file():
+    try:
+        if request.method == "POST":
+            if "file" not in request.files:
+                flash("No file part")
+                return redirect(request.url)
+            file = request.files["file"]
+            
+            if file.filename =="":
+                flash("No selected file")
+                return redirect(request.url)
+            
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+                flash("File" + str(filename) + "upload successful!")
+                return render_template('uploads.html', filename = filename)
+        return render_template("uploads.html")
+        
+    except Exception as e:
+        return(str(e)) # remember to remove! For debugging only!
+    
+## DOWNLOAD
+
+@app.route("/download/")
+@login_required
+def download():
+    try:
+        return send_file("/var/www/FlaskApp/FlaskApp/uploads/cat.jpg", attachment_filename="kitties.jpg")
+        
+    except Exception as e:
+        return str(e)
+    
+## WELCOME
+
+@app.route("/welcome/")
+def welcome():
+    try:
+        #This is where all the python goes!
+        
+        def my_function():
+            output = ["DIGIT 400 is good.", "Python, Java, php, SQL, C++", "<p><strong>Hello World<strong></p>", 42, "42"]
+            return output
+        
+        output = my_function()
+        
+        return render_template("templating_demo.html", output = output)
+        
+    except Exception as e:
+        return str(e) # remember to remove! For debugging only!
     
 ## SITE MAP
 
@@ -166,7 +259,7 @@ def sitemap():
         return response
     
     except Exception as e:
-        return(str(e))
+        return(str(e)) # remember to remove! For debugging only!
     
 ## ROUGE ROBOTS
 
