@@ -10,6 +10,9 @@ import os, sys; sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 from werkzeug.utils import secure_filename
 from content import Content
 from db_connect import connection
+from flask_socketio import SocketIO
+import json
+
 
 # constants / globals
 UPLOAD_FOLDER = "/var/www/FlaskApp/FlaskApp/uploads"
@@ -19,7 +22,10 @@ ALLOWED_EXTENSIONS = set(["txt", "pdf", "png", "jpg", "jpeg", "gif"])
 
 app = Flask(__name__) # builds our web app
 
+app.config['SECRET_KEY'] = 'ThIsIsAsEcReTkEy'
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+socketio = SocketIO(app)
 
 def allowed_file(filename): # this is to check for our allowed extensions
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -144,7 +150,7 @@ def logout():
         
 class RegistrationForm(Form):
     username = TextField("Username", [validators.Length(min=4, max=20)])
-    email = TextField("Email Address", [validators.Length(min=6, max=50)])
+    email = TextField("PSU Email Address", [validators.Length(min=6, max=50)])
     password = PasswordField("New Password", [validators.Required(), 
                 validators.EqualTo('confirm', message ="Passwords must match")])
     confirm = PasswordField("Repeat Password")
@@ -186,6 +192,13 @@ def register_page():
         return render_template("register.html", form=form)
     except Exception as e:
         return(str(e)) # remember to remove! For debugging only!
+    
+## TERMS OF SERVICE
+
+@app.route("/tos/")
+def tos():
+    return render_template("tos.html")
+
 
 ## UPLOADS
 
@@ -227,6 +240,7 @@ def download():
 ## WELCOME
 
 @app.route("/welcome/")
+@login_required
 def welcome():
     try:
         #This is where all the python goes!
@@ -242,7 +256,20 @@ def welcome():
     except Exception as e:
         return str(e) # remember to remove! For debugging only!
     
-## SITE MAP
+"""## HELLO WORLD
+
+@app.route("/chat/", methods=["GET", "POST"])
+def chat(methods=['GET', 'POST']):
+    return render_template("chat.html")
+
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
+
+@socketio.on('my event')
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json, callback=messageReceived)"""
+
 
 @app.route("/sitemap.xml/", methods=["GET"])
 def sitemap():
@@ -282,4 +309,4 @@ def int_server_error(e):
     return render_template("500.html", error = e)
 
 if __name__ == "__main__":
-    app.run(debug=True) # should be turned off/False for production!
+    socketio.run(app, debug=True) # should be turned off/False for production!
