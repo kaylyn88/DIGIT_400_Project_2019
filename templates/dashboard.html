@@ -2,125 +2,17 @@
 
 {% block body %}
 
-    <head>
-        <!-- CSS Style Sheet -->
-        <link rel="stylesheet" href="style.css" type="text/css">
-    </head>
 
-    <!-- Nav Tabs -->
-    <br>
-    <ul class="nav nav-pills mb-3" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#messages" role="tab" aria-controls="pills-contact" aria-selected="false">Messages</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
-        </li>
+    <!-- NAVBAR -->
+
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="/message/">Message Board</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
     </ul>
-    <!-- End Nav Tabs -->
 
-    <!-- Tab Content -->
-
-
-
-        <div class="tab-content" id="pills-tabContent">
-        
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        
-            <div class="container">
-                <div class="col">
-
-                <div class="card-deck" width="75px" height="90px">
-                    {% for i in APP_CONTENT["Home"] %}
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="/static/images/{{i[3]}}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{i[0]}}</h5>
-                            <p class="card-text">{{i[2]}}</p>
-                            <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            
-            <div class="container">
-                <div class="col">
-
-                <div class="card-deck" width="75px" height="90px">
-                    {% for i in APP_CONTENT["Profile"] %}
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="/static/images/{{i[3]}}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{i[0]}}</h5>
-                            <p class="card-text">{{i[2]}}</p>
-                            <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="tab-pane fade show active" id="messages" role="tabpanel" aria-labelledby="home-tab">
-            
-            <div class="container">
-                <div class="col">
-
-                <div class="card-deck" width="75px" height="90px">
-                    {% for i in APP_CONTENT["Messages"] %}
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="/static/images/{{i[3]}}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{i[0]}}</h5>
-                            <p class="card-text">{{i[2]}}</p>
-                            <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-            
-            <div class="container">
-                <div class="col">
-
-                <div class="card-deck" width="75px" height="90px">
-                    {% for i in APP_CONTENT["Contact"] %}
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="/static/images/{{i[3]}}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{i[0]}}</h5>
-                            <p class="card-text">{{i[2]}}</p>
-                            <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                </div>
-            </div>
-            
-        </div>
-        
-    </div>
-
-    <!-- End Tab Content -->
 
 {% endblock %}

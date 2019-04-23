@@ -12,6 +12,28 @@ from content import Content
 from db_connect import connection
 from flask_socketio import SocketIO
 import json
+import sqlite3 as lite
+
+DATABASE = "/var/www/FlaskApp/FlaskApp/database_example/database_example.db"
+#input_data = "bananas"
+#output_data = "cookies"
+
+def message(user_name,message):
+    con = lite.connect(DATABASE)
+    c = con.cursor()
+    c.execute("CREATE TABLE IF NOT EXISTS input_log(id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, message TEXT)")
+    c.execute("INSERT INTO input_log (user_name,message) VALUES (?,?)",(user_name, message))
+    con.commit()
+    c.close()
+    return
+
+def contents():
+    con = lite.connect(DATABASE)
+    c = con.cursor()
+    c.execute("SELECT * FROM input_log")
+    rows = c.fetchall() # there is also fetchone() this returns a list
+    con.close()
+    return rows
 
 
 # constants / globals
@@ -60,7 +82,7 @@ def index():
                 session['username'] = request.form['username']
                 
                 flash("You are now logged in "+session['username']+"!")
-                return redirect(url_for("dashboard"))
+                return redirect(url_for("message_page"))
             
             else: 
                 error = "Invalid creditials, try again." # want this the same as below because then the hacker does not know what the error is.
@@ -90,7 +112,7 @@ def about():
                 session['username'] = request.form['username']
                 
                 flash("You are now logged in "+session['username']+"!")
-                return redirect(url_for("dashboard"))
+                return redirect(url_for("message_page"))
             
             else: 
                 error = "Invalid creditials, try again." # want this the same as below because then the hacker does not know what the error is.
@@ -126,7 +148,7 @@ def login():
                 session['username'] = request.form['username']
                 
                 flash("You are now logged in "+session['username']+"!")
-                return redirect(url_for("dashboard"))
+                return redirect(url_for("message_page"))
             
             else: 
                 error = "Invalid creditials, try again." # want this the same as below because then the hacker does not know what the error is.
@@ -188,7 +210,7 @@ def register_page():
             session['logged_in'] = True
             session['username'] = username
 
-            return redirect(url_for("dashboard"))
+            return redirect(url_for("message_page"))
         return render_template("register.html", form=form)
     except Exception as e:
         return(str(e)) # remember to remove! For debugging only!
@@ -256,20 +278,32 @@ def welcome():
     except Exception as e:
         return str(e) # remember to remove! For debugging only!
     
-"""## HELLO WORLD
+## HELLO WORLD
+@app.route("/message/", methods=["GET", "POST"])
+@login_required
+def message_page():
+    try:
+        content = ""
+        if request.method == "POST":
+            
+            data = thwart(request.form['message'])
+            
+            name = session['username']
+            
+            message(name, data)
+            
+            content = contents()
+            flash("Thanks for your message!")
+            return render_template("message.html", content = content)
+        
+        content = contents()
+        return render_template("message.html", content = content)
+    
+    except Exception as e:
+        return str(e) # remember to remove! For debugging only!
+        
 
-@app.route("/chat/", methods=["GET", "POST"])
-def chat(methods=['GET', 'POST']):
-    return render_template("chat.html")
-
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
-
-@socketio.on('my event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: ' + str(json))
-    socketio.emit('my response', json, callback=messageReceived)"""
-
+## SITEMAP
 
 @app.route("/sitemap.xml/", methods=["GET"])
 def sitemap():
@@ -309,4 +343,4 @@ def int_server_error(e):
     return render_template("500.html", error = e)
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True) # should be turned off/False for production!
+    app.run(debug=True) # should be turned off/False for production!

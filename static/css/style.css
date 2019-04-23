@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Arimo|Lora|Orbitron');
 
+body {
+    background-color: rgb(211, 211, 211, 0.8);
+}
+
 h1, h2, h3, h4, h5, h6 {
-    color: blue;
+    color: #2e148c;
     font-family: 'Arimo', sans-serif;
 }
 
@@ -15,8 +19,9 @@ a {
 }
 
 a:hover {
-    color: skyblue;
+    color: blueviolet;
 }
+
 
 .loop {
     color: #ff2349;

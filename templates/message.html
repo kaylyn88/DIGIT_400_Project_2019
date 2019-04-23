@@ -1,0 +1,40 @@
+{% extends "header.html" %}
+
+{% block body %}
+
+    <br>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="/message/">Message Board <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="#">Features</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+        <br>
+        <center><h3>Message Board</h3>
+        <br>
+        <form action="#" class="form-inline" method="post">
+            
+            <input type="text" class="form-control" placeholder="Leave a message.." name="message" value="{{request.form.message}}">
+            &nbsp;
+            <input class="btn btn-primary" type="submit" value="Submit">
+            
+        </form></center>
+        <br>
+        <ul>
+            {% for inx, name, message in content%}
+            
+            <div class="alert alert-primary" role="alert">
+              <h4>{{name}}</h4>
+                <p>{{message}}</p>
+            </div>
+
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
