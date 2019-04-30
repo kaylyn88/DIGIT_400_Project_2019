@@ -3,7 +3,7 @@
 ## Penn State Behrend
 ### Digital Media, Arts, & Technology 
 
-This is a site that was created for the senior class Digital Project Design. This website is created using Python, Flask, and Jinja Templating. 
+This is a site that was created for the senior class Digital Project Design. This website is created using Python, Flask, and Jinja Templating. Bootstrap was used for many of the buttons on the site and other elements to help keep the site accessible and mobile friendly!
 
 The name of the site is the *Student Forum* and the url is [studentforum.club](https://studentforum.club/). 
 
