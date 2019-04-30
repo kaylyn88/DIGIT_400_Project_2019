@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css">
       
   </head>
-  <body>
+  <body background="{{ url_for('static', filename='images/blackboard.jpg') }}">
       
       
         <!-- Nav Bar from BootStrap -->
@@ -103,11 +103,10 @@
     <!-- Template Content --> 
 
         <div class="container-fluid" style="min-height: 100%">
-
             {% block body %}
-
+            
+            
             {% endblock %}
-
         </div>
       
     <!-- Footer Content -->
@@ -132,7 +131,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle">Login</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -152,7 +151,7 @@
                     <br>
                     <p><code>{{ error }}</code></p>
                   <hr>
-                    <p>Hello, do you need an account? <a href="/register/" style="text-decoration: none;">Register here!</a></p>
+                    <h6>Hello, do you need an account? <a href="/register/" style="text-decoration: none;">Register here!</a></h6>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -169,7 +168,7 @@
               <div class="modal-body">
                 <form action="#" method="get">
                     <br>
-                    <h6>Are you sure you want to logout?</h6>
+                    <h4>Are you sure you want to logout?</h4>
                     <br>
                 </form>
               </div>

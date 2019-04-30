@@ -2,37 +2,21 @@
 
 {% block body %}
 
-<head>
-<style>
-    
-    a {
-        color: #2E148C;
-    }
-    
-    a:hover{
-        color: skyblue;
-        text-decoration: none;
-    }
-    
-</style>
-    
-</head>
     <body>
         <div class="container" id="reg_form">
             <br>
-            <h3>Register</h3>
+            <center><h3 id="color">Register</h3>
             <br>
             {% from "formhelpers.html" import render_field %}
             
             <form method="post" action="/register/">
-            <dl>
+            <dl id="color">
                 {{render_field(form.username)}}
                 {{render_field(form.email)}}
                 {{render_field(form.password)}}
                 {{render_field(form.confirm)}}
                 {{render_field(form.accept_tos)}}
                 <a href="/tos/"><button type="button" class="btn btn-outline-primary">View the Terms of Service Page</button></a>
-                <br>
                 <br>
                 <br>
                 <p><input type="submit" value="Register"></p>
@@ -44,7 +28,7 @@
                 
                 {% endif %}
             </dl>
-            </form>
+            </form></center>
         </div>
     </body>
 

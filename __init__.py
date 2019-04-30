@@ -18,14 +18,16 @@ DATABASE = "/var/www/FlaskApp/FlaskApp/database_example/database_example.db"
 #input_data = "bananas"
 #output_data = "cookies"
 
-def message(user_name,message):
+def message(user_name,message,topics): # creating my table and the parts that will be put into it. Must be run in the command line by running the fucntion if the table is deleted to restart it.
     con = lite.connect(DATABASE)
     c = con.cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS input_log(id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, message TEXT)")
-    c.execute("INSERT INTO input_log (user_name,message) VALUES (?,?)",(user_name, message))
+    c.execute("CREATE TABLE IF NOT EXISTS input_log(id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, message TEXT, topics TEXT)")
+    c.execute("INSERT INTO input_log (user_name,message,topics) VALUES (?,?,?)",(user_name, message, topics))
     con.commit()
     c.close()
     return
+
+#def category():
 
 def contents():
     con = lite.connect(DATABASE)
@@ -33,7 +35,8 @@ def contents():
     c.execute("SELECT * FROM input_log")
     rows = c.fetchall() # there is also fetchone() this returns a list
     con.close()
-    return rows
+    return reversed(rows)
+    
 
 
 # constants / globals
@@ -279,6 +282,7 @@ def welcome():
         return str(e) # remember to remove! For debugging only!
     
 ## HELLO WORLD
+
 @app.route("/message/", methods=["GET", "POST"])
 @login_required
 def message_page():
@@ -287,10 +291,11 @@ def message_page():
         if request.method == "POST":
             
             data = thwart(request.form['message'])
+            topics = thwart(request.form['topic'])
             
             name = session['username']
             
-            message(name, data)
+            message(name, topics, data)
             
             content = contents()
             flash("Thanks for your message!")

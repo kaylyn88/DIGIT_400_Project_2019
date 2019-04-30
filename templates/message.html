@@ -4,37 +4,52 @@
 
     <br>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+    <!--<nav class="navbar navbar-expand-lg navbar-light bg-light"> 
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-item nav-link active" href="/message/">Message Board <span class="sr-only">(current)</span></a>
           <a class="nav-item nav-link" href="#">Features</a>
         </div>
       </div>
-    </nav>
+    </nav>-->
+    <body>
+    <div class="white">
+        <div class="container">
+            <br> <!-- THIS IS WHAT IS KEEPING THE WHITE CONTAINER SLIGHTLY SEPTERATE FROM THE TOP! -->
+            <center><h3>Message Board</h3></center>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-6">
+                        <form action="#" class="form-inline" method="post">
+                            <input type="text" class="form-control" placeholder="Topic" name="topic" value="{{request.form.topic}}">
+                            <input type="text" class="form-control" placeholder="Leave a message.." name="message" value="{{request.form.message}}" style="min-width: 200px; min-height: 75px;">
+                            &nbsp;
+                            <input class="btn btn-primary" type="submit" value="Submit">
 
-    <div class="container">
-        <br>
-        <center><h3>Message Board</h3>
-        <br>
-        <form action="#" class="form-inline" method="post">
-            
-            <input type="text" class="form-control" placeholder="Leave a message.." name="message" value="{{request.form.message}}">
-            &nbsp;
-            <input class="btn btn-primary" type="submit" value="Submit">
-            
-        </form></center>
-        <br>
-        <ul>
-            {% for inx, name, message in content%}
-            
-            <div class="alert alert-primary" role="alert">
-              <h4>{{name}}</h4>
-                <p>{{message}}</p>
+                        </form>
+                    </div>
+                    <div class="col"></div>
+                </div>
+
+            <br>
+            <ul>
+                {% for inx, name, message, topics in content%}
+
+                <div class="alert alert-primary" role="alert">
+                    <h6><i>{{topics}}</i></h6>
+                    <h3>{{message}}</h3>
+                    <br>
+                    <br>
+                    <h5 style="font-weight: bold;"> {{name}}</h5>
+                </div>
+
+                {% endfor %}
+            </ul>
             </div>
-
-            {% endfor %}
-        </ul>
+            <br> <!-- THIS IS WHAT IS KEEPING THE WHITE CONTAINER FULLY TO THE BOTTOM! -->
+        </div>
     </div>
-
+    </body>
 {% endblock %}

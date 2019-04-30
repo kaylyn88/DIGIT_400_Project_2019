@@ -36,15 +36,15 @@
       
     <style>
       
-        body {
-            background: rgb(211, 211, 211, 0.8);
+        .topic {
+            font-weight: bold;
         }
         
     </style>  
       
       
   </head>
-  <body>
+  <body background="{{ url_for('static', filename='images/blackboard.jpg') }}">
       
 <!-- Nav Bar from BootStrap -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -103,7 +103,7 @@
                 </div>
                 
                 <div class="col-6">
-                  <h3>Welcome to the Student Forum!</h3>
+                  <h3 id="color">Welcome to the Student Forum!</h3>
                 </div>
                 
                 <div class="col">
@@ -116,30 +116,24 @@
             <br>
         <div class="container">
             <div class="list-group">
-              <a href="/message/" class="list-group-item list-group-item-action">Student Life
+              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">Student Life</p>
                     <div class="d-flex w-100 justify-content-between">
                           <small>0 day(s) ago</small>
                     </div></a>
-              <a href="/message/" class="list-group-item list-group-item-action">Living on Campus
+              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">Living on Campus</p>
                     <div class="d-flex w-100 justify-content-between">
                         <small>0 day(s) ago</small>
                     </div></a>
-              <a href="/message/" class="list-group-item list-group-item-action">Where to Eat?
+              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">Where to Eat?</p>
                     <div class="d-flex w-100 justify-content-between">
                         <small>1 day(s) ago</small>
                     </div></a>
-              <a href="/message/" class="list-group-item list-group-item-action">Understanding Science Complex
+              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">Understanding Science Complex</p>
                     <div class="d-flex w-100 justify-content-between">
                         <small>1 day(s) ago</small>
                     </div></a>
-                <a href="/message/" class="list-group-item list-group-item-action">Best Study Tips
-                    <div class="d-flex w-100 justify-content-between">
-                        <small>2 day(s) ago</small>
-                    </div></a>
-                <a href="/message/" class="list-group-item list-group-item-action">Places to Relax 
-                    <div class="d-flex w-100 justify-content-between">
-                        <small>2 day(s) ago</small>
-                    </div></a>
+                <br>
+                <br>
                 <br>
                 <br>
                 <br>
@@ -165,7 +159,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle">Login</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -185,7 +179,7 @@
                     <br>
                     <p><code>{{ error }}</code></p>
                   <hr>
-                    <p>Hello, do you need an account? <a href="/register/" style="text-decoration: none;">Register here!</a></p>
+                    <h6>Hello, do you need an account? <a href="/register/" style="text-decoration: none;">Register here!</a></h6>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -203,7 +197,7 @@
                 <div class="modal-body">
                     <form action="#" method="get">
                         <br>
-                        <h6>Are you sure you want to logout?</h6>
+                        <h4>Are you sure you want to logout?</h4>
                         <br>
                     </form>
               <div class="modal-footer">
