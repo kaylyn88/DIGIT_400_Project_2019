@@ -1,10 +1,14 @@
 # DIGIT 400 Project
 
 ## Penn State Behrend
-### Digital Media, Arts, & Technology
+### Digital Media, Arts, & Technology 
 
-This site is a demo for the students of [Penn State Behrend](http://behrend.psu.edu)
+This is a site that was created for the senior class Digital Project Design. This website is created using Python, Flask, and Jinja Templating. Bootstrap was used for many of the buttons on the site and other elements to help keep the site accessible and mobile friendly!
 
-## We can do images too!
+The name of the site is the *Student Forum* and the url is [studentforum.club](https://studentforum.club/). 
 
-![Computer Cat](http://i.huffpost.com/gen/1718649/thumbs/o-CAT-COMPUTER-facebook.jpg)
+### What does it do?
+The functionality for this website includes a login page where a user/student can login. Once logged in, the student will be redirected to the message dashboard where they can post questions or answers to other questions to help other students out. 
+
+### Purpose
+This site was created because there is no current place where students can go online to ask questions about college life. On this message board, I hope to change this and have a community where students can feel safe asking questions about college that they have no one to ask. 
