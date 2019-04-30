@@ -23,7 +23,13 @@
                     <div class="col"></div>
                     <div class="col-6">
                         <form action="#" class="form-inline" method="post">
-                            <input type="text" class="form-control" placeholder="Topic" name="topic" value="{{request.form.topic}}">
+                            <div class="form-group col-md-4">
+                              <label for="inputState">Topics</label>
+                              <select id="inputState" class="form-control">
+                                <option selected>General</option>
+                                <option value="welcome" selected="{{request.form.topic==0}}">Student Life</option>
+                              </select>
+                            </div>
                             <input type="text" class="form-control" placeholder="Leave a message.." name="message" value="{{request.form.message}}" style="min-width: 200px; min-height: 75px;">
                             &nbsp;
                             <input class="btn btn-primary" type="submit" value="Submit">
@@ -43,6 +49,7 @@
                     <br>
                     <br>
                     <h5 style="font-weight: bold;"> {{name}}</h5>
+                    <!-- <h6>{{local[0]}}</h6> This is for the year -->
                 </div>
 
                 {% endfor %}

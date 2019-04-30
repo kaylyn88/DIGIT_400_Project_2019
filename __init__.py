@@ -13,21 +13,21 @@ from db_connect import connection
 from flask_socketio import SocketIO
 import json
 import sqlite3 as lite
+import time
 
 DATABASE = "/var/www/FlaskApp/FlaskApp/database_example/database_example.db"
 #input_data = "bananas"
 #output_data = "cookies"
 
-def message(user_name,message,topics): # creating my table and the parts that will be put into it. Must be run in the command line by running the fucntion if the table is deleted to restart it.
+def message(user_name,message,topic,local): # creating my table and the parts that will be put into it. Must be run in the command line by running the fucntion if the table is deleted to restart it.
     con = lite.connect(DATABASE)
     c = con.cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS input_log(id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, message TEXT, topics TEXT)")
-    c.execute("INSERT INTO input_log (user_name,message,topics) VALUES (?,?,?)",(user_name, message, topics))
+    c.execute("CREATE TABLE IF NOT EXISTS input_log(id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, message TEXT, topic TEXT, local TEXT)")
+    c.execute("INSERT INTO input_log (user_name,message,topic,local) VALUES (?,?,?,?)",(user_name, message, topic, local))
     con.commit()
     c.close()
     return
 
-#def category():
 
 def contents():
     con = lite.connect(DATABASE)
@@ -291,15 +291,15 @@ def message_page():
         if request.method == "POST":
             
             data = thwart(request.form['message'])
-            topics = thwart(request.form['topic'])
+            topic = thwart(request.form['topic'])
             
             name = session['username']
-            
-            message(name, topics, data)
+            local = str(time.localtime()[0:5])
+            message(name, topic, data, local)
             
             content = contents()
             flash("Thanks for your message!")
-            return render_template("message.html", content = content)
+            return render_template("message.html", content = content, local = local)
         
         content = contents()
         return render_template("message.html", content = content)
