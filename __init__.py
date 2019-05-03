@@ -19,11 +19,11 @@ DATABASE = "/var/www/FlaskApp/FlaskApp/database_example/database_example.db"
 #input_data = "bananas"
 #output_data = "cookies"
 
-def message(user_name,message,topic,local): # creating my table and the parts that will be put into it. Must be run in the command line by running the fucntion if the table is deleted to restart it.
+def message(user_name,topic,message): # creating my table and the parts that will be put into it. Must be run in the command line by running the fucntion if the table is deleted to restart it.
     con = lite.connect(DATABASE)
     c = con.cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS input_log(id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, message TEXT, topic TEXT, local TEXT)")
-    c.execute("INSERT INTO input_log (user_name,message,topic,local) VALUES (?,?,?,?)",(user_name, message, topic, local))
+    c.execute("CREATE TABLE IF NOT EXISTS input_log(id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, topic TEXT, message TEXT)")
+    c.execute("INSERT INTO input_log (user_name,topic,message) VALUES (?,?,?)",(user_name, topic, message))
     con.commit()
     c.close()
     return
@@ -294,12 +294,11 @@ def message_page():
             topic = thwart(request.form['topic'])
             
             name = session['username']
-            local = str(time.localtime()[0:5])
-            message(name, topic, data, local)
+            message(name, topic, data)
             
             content = contents()
             flash("Thanks for your message!")
-            return render_template("message.html", content = content, local = local)
+            return render_template("message.html", content = content)
         
         content = contents()
         return render_template("message.html", content = content)

@@ -40,14 +40,18 @@
             font-weight: bold;
         }
         
+        body {
+            background-repeat: space;
+        }
+        
     </style>  
       
       
   </head>
-  <body background="{{ url_for('static', filename='images/blackboard.jpg') }}">
+  <body background="{{ url_for('static', filename='images/blackboard.jpeg') }}">
       
 <!-- Nav Bar from BootStrap -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         
     <!-- This is the logo for the site -->
             <a class="navbar-brand" href="/">
@@ -103,7 +107,9 @@
                 </div>
                 
                 <div class="col-6">
-                  <h3 id="color">Welcome to the Student Forum!</h3>
+                    <h3 id="color">Welcome to the Student Forum!</h3>
+                    <br>
+                    <h6 id="color">Please create an <a href="/register/">account</a> to view the most recent posts!</h6>
                 </div>
                 
                 <div class="col">
@@ -114,27 +120,68 @@
           </div>
         </center>
             <br>
-        <div class="container">
+       
+      <!-- Recent Topic generator -->
+      <div class="container">
             <div class="list-group">
-              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">Student Life</p>
+              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">RE: Summer Financial Aid</p>
                     <div class="d-flex w-100 justify-content-between">
-                          <small>0 day(s) ago</small>
-                    </div></a>
-              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">Living on Campus</p>
-                    <div class="d-flex w-100 justify-content-between">
+                        <p>User: kay88</p>
                         <small>0 day(s) ago</small>
                     </div></a>
-              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">Where to Eat?</p>
+                <br>
+              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">Summer Financial Aid</p>
                     <div class="d-flex w-100 justify-content-between">
+                        <p>User: Deryk</p>
                         <small>1 day(s) ago</small>
                     </div></a>
-              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">Understanding Science Complex</p>
+                <br>
+              <a href="/message/" class="list-group-item list-group-item-action"><p class="topic">General Topic</p>
                     <div class="d-flex w-100 justify-content-between">
+                        <p>User: Kaylyn</p>
                         <small>1 day(s) ago</small>
                     </div></a>
+                
+              <br>  
+        <!-- Carousel of Penn State Behrend -->
+                <p id="color" style="text-align: center; font-size: 15pt;">This campus has a lot to offer, check out the Library!</p>
                 <br>
-                <br>
-                <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                          <img class="d-block w-100" src="{{ url_for('static', filename='images/library.jpg') }}" alt="Computers in the library at Penn State Behrend" width="250" height="350">
+                        </div>
+                        <div class="col">
+                          <img class="d-block w-100" src="{{ url_for('static', filename='images/computers.jpg') }}" alt="Computers in the library at Penn State Behrend" width="250" height="350">
+                        </div>
+                    </div>
+                </div>
+                
+            
+                
+                <!-- WANT TO USE THIS LATER SO KEEP NOW
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                  </ol>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img class="d-block w-100" src="{{ url_for('static', filename='images/library.jpg') }}" alt="Penn State Behrend's Library">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100" src="{{ url_for('static', filename='images/computers.jpg') }}" alt="Computers in the library at Penn State Behrend">
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>-->
                 <br>
                 <br>
                 

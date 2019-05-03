@@ -23,17 +23,18 @@
                     <div class="col"></div>
                     <div class="col-6">
                         <form action="#" class="form-inline" method="post">
-                            <div class="form-group col-md-4">
-                              <label for="inputState">Topics</label>
-                              <select id="inputState" class="form-control">
-                                <option selected>General</option>
-                                <option value="welcome" selected="{{request.form.topic==0}}">Student Life</option>
-                              </select>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Leave a message.." name="message" value="{{request.form.message}}" style="min-width: 200px; min-height: 75px;">
-                            &nbsp;
-                            <input class="btn btn-primary" type="submit" value="Submit">
-
+                              <div class="row">
+                                <div class="col">
+                                  <input type="text" class="form-control" placeholder="Topic name.." name="topic" value="{{request.form.topic}}">
+                                    <p><i>Add an <strong>RE:</strong> to reply to a topic.</i></p>
+                                </div>
+                                <div class="col-6">
+                                  <input type="text" class="form-control" placeholder="Leave a message.." name="message" value="{{request.form.message}}">
+                                </div>
+                                <div class="col">
+                                  <input class="btn btn-primary" type="submit" value="Submit">
+                                </div>
+                              </div>
                         </form>
                     </div>
                     <div class="col"></div>
@@ -41,15 +42,21 @@
 
             <br>
             <ul>
-                {% for inx, name, message, topics in content%}
+                {% for inx, name, topic, message in content%}
 
                 <div class="alert alert-primary" role="alert">
-                    <h6><i>{{topics}}</i></h6>
-                    <h3>{{message}}</h3>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <h3 style="color: black;"><i>{{topic}}</i></h3>
+                            </div>
+                            <div class="col">
+                                <h5 style="font-weight: bold; text-align: right;">User: {{name}}</h5>
+                            </div>
+                          </div>
+                    </div>
                     <br>
-                    <br>
-                    <h5 style="font-weight: bold;"> {{name}}</h5>
-                    <!-- <h6>{{local[0]}}</h6> This is for the year -->
+                    <h6 style="color: black; line-height: 2; text-indent: 1em; text-align: justify;">{{message}}</h6>
                 </div>
 
                 {% endfor %}
